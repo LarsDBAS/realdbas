@@ -40,6 +40,7 @@ public class StatusServiceImpl implements StatusService {
 		result = sdi.findAll();
 		this.entityManager.getTransaction().commit();
 		return result;
+		
 	}
 
 	public StatusServiceImpl() {
