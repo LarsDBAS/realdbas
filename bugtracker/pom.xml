@@ -151,7 +151,7 @@
     </dependencies>
 
     <build>
-        <finalName>mygourmet10</finalName>
+        <finalName>bugtracker</finalName>
         <defaultGoal>install</defaultGoal>
         <plugins>
             <plugin>
