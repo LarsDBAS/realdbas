@@ -30,6 +30,7 @@ public class StatusServiceImpl implements StatusService {
     }
 
 
+    
 	@Override
 	public List<Status> showAllStati() {
 		StatusDaoImpl sdi = new StatusDaoImpl();
