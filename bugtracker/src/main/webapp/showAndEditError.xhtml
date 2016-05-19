@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:mg="http://at.irian/mygourmet"
+        xmlns:rich="http://richfaces.org/rich"
+        xmlns:a4j="http://richfaces.org/a4j">
+<h:head>
+    <title>
+        <h:outputText value="Ticketsystem - Projekt-Fehler"/>
+    </title>
+       	<style type="text/css">
+		<!--
+			html, body {
+				font: 90% Arial, Helvetica, sans-serif;
+			}
+			.ui-selectlistbox-item.ui-state-disabled {
+			    display: none;
+			}
+		-->
+  		</style>
+</h:head>
+<h:body>
+    <ui:include src="WEB-INF/includes/header.xhtml">
+        <ui:param name="pageTitle" value="Fehlerdetails"/>
+    </ui:include>
+    <h:messages showDetail="true" showSummary="false"/>
+    <h:form id="form">
+        <h:panelGrid id="grid" columns="2">
+            <h:outputLabel for="bez" value="Bezeichnung:"/>
+            <h:inputText id="bez" size="30"
+                    value="#{fehlerBean.fehler.bezeichnung}">
+            </h:inputText>
+            <h:outputLabel for="beschr" value="Beschreibung:"/>
+            <h:inputText id="beschr" size="30" maxlength="40"
+                         value="#{fehlerBean.fehler.beschreibung}"/>
+            <h:outputLabel for="erstellt" value="Erstellt am:"/>
+			                    <rich:calendar id="erstellt" value="#{fehlerBean.fehler.erstellt}"
+                        popup="true"
+                        datePattern="yyyy-MM-dd"
+                        showApplyButton="true" cellWidth="12px" cellHeight="11px" style="width:100px"/>
+			<h:outputLabel for="erstelltVon" value="Erstellt von:"/>
+			<rich:select id="erstelltVon" defaultLabel="Nutzer wählen" value="#{fehlerBean.fehler.erstelltVon}">
+				<f:selectItems value="#{nutzerBean.nutzerOptions}" var="user" itemValue="#{user}" itemLabel="#{user.nachname}, #{user.vorname}" />
+				<f:converter converterId="at.irian.jsfatwork.gui.util.NutzerConverter" />
+	      	</rich:select>
+            <h:outputLabel for="status" value="Status:"/>
+			<rich:select id="status" defaultLabel="Status auswählen" value="#{fehlerBean.fehler.status}">
+	            <f:selectItem itemValue="offen" itemLabel="Offen"/>
+	            <f:selectItem itemValue="inbearb" itemLabel="In Bearbeitung"/>
+	            <f:selectItem itemValue="gelöst" itemLabel="Gelöst"/>
+	      	</rich:select>
+            <h:outputLabel for="prioritaet" value="Priorität:"/>
+            <rich:inputNumberSlider id="prioritaet" maxValue="10" minValue="1" value="#{fehlerBean.fehler.prioritaet}" />        
+            <h:outputLabel for="comments" value="Kommentare:" rendered="#{not empty fehlerBean.fehler.feNr}"/>
+            <rich:extendedDataTable id="comments" var="comment" value="#{fehlerBean.kommentarList}" rendered="#{not empty fehlerBean.fehler.feNr}" selectionMode="none">
+            <rich:column width="35px">
+                <f:facet name="header">
+                    <h:outputText value="ID" />
+                </f:facet>
+                <h:outputText value="#{comment.koNr}"/>
+            </rich:column>
+            <rich:column width="250px">
+                <f:facet name="header">
+                    <h:outputText value="Text"/>
+                </f:facet>
+                <h:outputText value="#{comment.text}"/>
+            </rich:column>
+            <rich:column width="200px">
+                <f:facet name="header">
+                    <h:outputText value="Erstellt"/>
+                </f:facet>
+                <h:outputText value="#{comment.erstellt}"/>
+            </rich:column>
+            <rich:column width="50px">
+                <h:commandLink action="#{fehlerBean.editKommentar(comment)}">
+                	<h:graphicImage value="/images/edit_ico.png" />
+                </h:commandLink>
+                &#160;
+                <h:commandLink action="#{fehlerBean.deleteKommentar(comment)}">
+                	<h:graphicImage value="/images/delete_ico.png" />
+                </h:commandLink>
+            </rich:column>
+        </rich:extendedDataTable>
+        
+        <h:outputLabel for="references" value="Verweist auf:" rendered="#{not empty fehlerBean.fehler.verweistAuf}"/>
+            <rich:extendedDataTable id="references" var="ref" value="#{fehlerBean.fehler.verweistAuf}" rendered="#{not empty fehlerBean.fehler.verweistAuf}" selectionMode="none">
+            <rich:column width="35px">
+                <f:facet name="header">
+                    <h:outputText value="ID" />
+                </f:facet>
+                <h:outputText value="#{ref.feNr}"/>
+            </rich:column>
+            <rich:column width="250px" >
+                <f:facet name="header">
+                    <h:outputText value="Bezeichnung"/>
+                </f:facet>
+                <h:commandLink action="#{fehlerBean.editFehler(ref)}" >
+                	<h:outputText value="#{ref.bezeichnung}"/>
+                </h:commandLink>
+            </rich:column>
+
+            <rich:column width="50px">
+                <h:commandLink action="#{fehlerBean.removeFehlerReference(fehlerBean.fehler, ref)}" >
+                	<h:graphicImage value="/images/delete_ico.png" />
+                </h:commandLink>
+            </rich:column>
+        </rich:extendedDataTable>
+        <h:outputLabel for="verweistAuf" value="Verweis hinzufügen:" rendered="#{not empty fehlerBean.fehler.feNr}"/>
+		<rich:select id="select">
+			<f:selectItems value="#{fehlerBean.fehlerList}" var="fehler" itemValue="#{fehler}" itemLabel="#{fehler.feNr}: #{fehler.bezeichnung}"/>
+			 <a4j:ajax event="selectitem" oncomplete="updateBean(#{rich:component('select')}.getValue())" />
+			<!-- <f:converter converterId="at.irian.jsfatwork.gui.util.FehlerConverter" /> -->
+     	</rich:select>
+     	<a4j:jsFunction name="updateBean">
+   			 <a4j:param assignTo="#{fehlerBean.reference}" name="value" />
+		</a4j:jsFunction>
+        
+        <h:outputLabel value="Kommentartext:" rendered="#{not empty fehlerBean.fehler.feNr}"/>
+        <h:inputText id="comment" size="30" maxlength="40"
+                         value="#{fehlerBean.kommentar.text}" style="width: 355px; height: 103px; " rendered="#{not empty fehlerBean.fehler.feNr}"/><h:commandButton id="writeComment" action="#{fehlerBean.createKommentar(fehlerBean.fehler)}" value="Kommentar schreiben" rendered="#{not empty fehlerBean.fehler.feNr}"/>    
+        </h:panelGrid>
+        <h:commandButton id="save" action="#{fehlerBean.saveFehler(fehlerBean.projekt)}" value="#{msgs.save}"/>
+        <h:commandButton id="cancel" value="#{msgs.cancel}" action="#{fehlerBean.showErrors(fehlerBean.projekt)}" immediate="true"/>
+        <h:commandButton id="addreference" value="Verweis hinzufügen" action="#{fehlerBean.addFehlerReference(fehlerBean.fehler,fehlerBean.reference)}" immediate="true"/>
+    </h:form>
+</h:body>
+</html>

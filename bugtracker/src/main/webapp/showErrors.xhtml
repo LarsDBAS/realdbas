@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:mg="http://at.irian/mygourmet"
+        xmlns:a4j="http://richfaces.org/a4j"
+        xmlns:rich="http://richfaces.org/rich">
+<h:head>
+    <title>
+        <h:outputText value="#{msgs.title_main} - #{msgs.title_edit_address}"/>
+    </title>
+            <style type="text/css">
+		<!--
+			html, body {
+				font: 90% Arial, Helvetica, sans-serif;
+			}
+		-->
+  		</style>
+</h:head>
+<body>
+    <ui:include src="WEB-INF/includes/header.xhtml">
+        <ui:param name="pageTitle" value="Fehler"/>
+    </ui:include>
+    <h:messages showDetail="true" showSummary="false"/>
+    <h:form id="form">
+        <rich:extendedDataTable var="fehler" value="#{fehlerBean.fehlerList}" selectionMode="none">
+            <rich:column width="30px">
+                <f:facet name="header">
+                    <h:outputText value="ID"/>
+                </f:facet>
+                <h:outputText value="#{fehler.feNr}"/>
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Bezeichnung"/>
+                </f:facet>
+                <h:outputText value="#{fehler.bezeichnung}"/>
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">
+                    <h:outputText value="Beschreibung"/>
+                </f:facet>
+                <h:outputText value="#{fehler.beschreibung}"/>
+            </rich:column>
+            <rich:column width="200px">
+                <f:facet name="header">
+                    <h:outputText value="Erstellt am"/>
+                </f:facet>
+                <h:outputText value="#{fehler.erstellt}"/>
+            </rich:column>
+            <rich:column width="65px">
+                <f:facet name="header">
+                    <h:outputText value="Status"/>
+                </f:facet>
+                <h:outputText value="#{fehler.status}"/>
+            </rich:column>
+            <rich:column width="65px">
+                <f:facet name="header">
+                    <h:outputText value="Priorität"/>
+                </f:facet>
+                <h:outputText value="#{fehler.prioritaet}"/>
+            </rich:column>
+            <rich:column width="50px">
+                <h:commandLink action="#{fehlerBean.editFehler(fehler)}">
+                	 <h:graphicImage value="/images/edit_ico.png" />
+                </h:commandLink>
+                &#160;
+                <h:commandLink action="#{fehlerBean.deleteFehler(fehler)}">
+                	<h:graphicImage value="/images/delete_ico.png" />
+                </h:commandLink>               
+            </rich:column>
+        </rich:extendedDataTable><br />
+        <h:commandButton id="create" action="#{fehlerBean.createFehler(fehlerBean.projekt)}" value="Erstellen"/>
+        <h:commandButton id="back" action="/showProjects.xhtml" value="Zurück"/>
+        <h:commandButton id="reports" action="/showReports.xhtml" value="Reports anzeigen"/>
+    </h:form>
+</body>
+</html>

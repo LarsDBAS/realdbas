@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:mg="http://at.irian/mygourmet"
+        xmlns:rich="http://richfaces.org/rich"
+        xmlns:a4j="http://richfaces.org/a4j"
+        xmlns:hf="http://highfaces.org"
+        >
+<h:head>
+    <title>
+        <h:outputText value="Ticketsystem - Reports"/>
+    </title>
+       	<style type="text/css">
+		<!--
+			html, body {
+				font: 90% Arial, Helvetica, sans-serif;
+			}
+			.ui-selectlistbox-item.ui-state-disabled {
+			    display: none;
+			}
+		-->
+  		</style>
+</h:head>
+<h:body>
+    <ui:include src="WEB-INF/includes/header.xhtml">
+        <ui:param name="pageTitle" value="Reports"/>
+    </ui:include>
+    <h:messages showDetail="true" showSummary="false"/>
+    <h:form id="form">
+    	<hf:chart type="pie" title="Fehleranteil nach Status">
+    		<hf:chartSerie name="Fehler" value="#{reportBean.frList}" var="fr" point="#{fr.anzahl}"  tickLabel="#{fr.status}" dataLabel="&lt;b>{point.name}&lt;/b>: {point.percentage:.1f} % &lt;i>({point.y})&lt;/i>"/>
+		</hf:chart>
+        
+        <h:commandButton id="refresh" action="/showReports.xhtml" value="Report anzeigen"/>
+        <h:commandButton id="back" value="Zurück" action="#{fehlerBean.showErrors(fehlerBean.projekt)}" immediate="true"/>
+        
+    </h:form>
+</h:body>
+</html>
