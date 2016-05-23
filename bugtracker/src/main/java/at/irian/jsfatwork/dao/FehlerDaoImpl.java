@@ -1,12 +1,15 @@
 package at.irian.jsfatwork.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import at.irian.jsfatwork.domain.Fehler;
+import at.irian.jsfatwork.domain.Nutzer;
 import at.irian.jsfatwork.domain.Projekt;
 import at.irian.jsfatwork.domain.Status;
 
@@ -102,6 +105,29 @@ public class FehlerDaoImpl implements FehlerDao {
 		return result;
 	}
 	
+	@Override
+	public List<Fehler> findByStatusUndNutzer(Status status, Nutzer nutzer) {
+		List<Fehler> result;
+		entityManager.getEntityManagerFactory().getCache().evictAll();
+		TypedQuery<Fehler> q = entityManager.createQuery(""+
+				"From Fehler As f WHERE f.inStatus = :status AND f.erstelltVon = :nutzer", Fehler.class);
+		q.setParameter("status", status);
+		q.setParameter("nutzer", nutzer);
+		result = q.getResultList();
+		return result;
+	}
+
+	@Override
+	public List<Fehler> findByDateRange(Date begin, Date end) {
+		List<Fehler> result;
+		entityManager.getEntityManagerFactory().getCache().evictAll();
+		TypedQuery<Fehler> q = entityManager.createQuery(""+
+				"From Fehler As f WHERE f.erstellt BETWEEN :startDate AND :endDate" , Fehler.class);
+		q.setParameter("startDate", begin, TemporalType.DATE);
+		q.setParameter("endDate", end, TemporalType.DATE);
+		result = q.getResultList();
+		return result;
+	}
 
 
 

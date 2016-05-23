@@ -1,5 +1,6 @@
 package at.irian.jsfatwork.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -11,6 +12,7 @@ import javax.persistence.TypedQuery;
 import at.irian.jsfatwork.dao.FehlerDaoImpl;
 import at.irian.jsfatwork.dao.ProjektDaoImpl;
 import at.irian.jsfatwork.domain.Fehler;
+import at.irian.jsfatwork.domain.Nutzer;
 import at.irian.jsfatwork.domain.Projekt;
 import at.irian.jsfatwork.domain.Status;
 
@@ -96,5 +98,28 @@ public class FehlerServiceImpl implements FehlerService {
 		return result;
 	}
 
+	@Override
+	public List<Fehler> findByStatusUndNutzer(Status status, Nutzer nutzer) {
+		FehlerDaoImpl fdi = new FehlerDaoImpl();
+		fdi.setEntityManager(this.entityManager);
+		List<Fehler> result = null;
+		//this.entityManager.refresh(Fehler.class);
+		this.entityManager.getTransaction().begin();
+		result = fdi.findByStatusUndNutzer(status, nutzer);
+		this.entityManager.getTransaction().commit();
+		return result;
+	}
+
+	@Override
+	public List<Fehler> findByDateRange(Date begin, Date end) {
+		FehlerDaoImpl fdi = new FehlerDaoImpl();
+		fdi.setEntityManager(this.entityManager);
+		List<Fehler> result = null;
+		//this.entityManager.refresh(Fehler.class);
+		this.entityManager.getTransaction().begin();
+		result = fdi.findByDateRange(begin, end);
+		this.entityManager.getTransaction().commit();
+		return result;
+	}
 
 }
