@@ -32,11 +32,18 @@
     </ui:include>
     <h:messages showDetail="true" showSummary="false"/>
     <h:form id="form">
+    	<h:panelGrid>			<h:outputLabel for="erstelltVon" value="Erstellt von:"/>
+		<rich:select id="erstelltVon" defaultLabel="Nutzer wählen" value="#{reportBean.nutzer}">
+			<f:selectItems value="#{nutzerBean.nutzerOptions}" var="user" itemValue="#{user}" itemLabel="#{user.nachname}, #{user.vorname}" />
+			<f:converter converterId="at.irian.jsfatwork.gui.util.NutzerConverter" />
+      	</rich:select>
+		</h:panelGrid>
+    
     	<hf:chart type="pie" title="Fehleranteil nach Status">
     		<hf:chartSerie name="Fehler" value="#{reportBean.frList}" var="fr" point="#{fr.anzahl}"  tickLabel="#{fr.status}" dataLabel="&lt;b>{point.name}&lt;/b>: {point.percentage:.1f} % &lt;i>({point.y})&lt;/i>"/>
 		</hf:chart>
         
-        <h:commandButton id="refresh" action="/showReports.xhtml" value="Report anzeigen"/>
+        <h:commandButton id="refresh" action="#{reportBean.ladeDaten(reportBean.nutzer)}" value="Report anzeigen"/>
         <h:commandButton id="back" value="Zurück" action="#{fehlerBean.showErrors(fehlerBean.projekt)}" immediate="true"/>
         
     </h:form>

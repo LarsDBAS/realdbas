@@ -116,6 +116,7 @@
 			 <a4j:ajax event="selectitem" oncomplete="updateBean(#{rich:component('select')}.getValue())" />
 			<!-- <f:converter converterId="at.irian.jsfatwork.gui.util.FehlerConverter" /> -->
      	</rich:select>
+     	<h:outputLabel for="ajax"/>
      	<a4j:jsFunction name="updateBean">
    			 <a4j:param assignTo="#{fehlerBean.reference}" name="value" />
 		</a4j:jsFunction>
