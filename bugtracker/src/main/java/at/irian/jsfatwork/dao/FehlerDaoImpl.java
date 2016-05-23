@@ -31,9 +31,12 @@ public class FehlerDaoImpl implements FehlerDao {
 		Query q1 = entityManager.createNativeQuery(""
 				+ "DELETE FROM KOMMENTAR WHERE FENR = " +fehler.getFeNr());
 		Query q2 = entityManager.createNativeQuery(""
+				+ "DELETE FROM FEHLER_FEHLER WHERE Fehler_FENR = " +fehler.getFeNr());
+		Query q3 = entityManager.createNativeQuery(""
 				+ "DELETE FROM FEHLER WHERE FENR = " +fehler.getFeNr());
 		q1.executeUpdate();
 		q2.executeUpdate();
+		q3.executeUpdate();
 		
 	}
 
