@@ -14,6 +14,7 @@ public class FehlerReport {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	//hier
 	}
 	
 	
