@@ -68,7 +68,7 @@
                 <f:facet name="header">
                     <h:outputText value="Erstellt von:"/>
                 </f:facet>
-                <h:outputText value="#{fehlerBean.getErstelltVon()}"/>
+                <h:outputText value="#{fehler.getErstelltVon().getNachname()}"/>
             </rich:column>
             <rich:column width="50px">
                 <h:commandLink action="#{fehlerBean.editFehler(fehler)}">
