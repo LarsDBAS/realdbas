@@ -121,5 +121,17 @@ public class FehlerServiceImpl implements FehlerService {
 		this.entityManager.getTransaction().commit();
 		return result;
 	}
+	
+	@Override
+	public String findNutzer(Integer nutzerNr) {
+		FehlerDaoImpl fdi = new FehlerDaoImpl();
+		fdi.setEntityManager(this.entityManager);
+		String result = null;
+		//this.entityManager.refresh(Fehler.class);
+		this.entityManager.getTransaction().begin();
+		result = fdi.findNutzerNr(nutzerNr);
+		this.entityManager.getTransaction().commit();
+		return result;
+	}
 
 }

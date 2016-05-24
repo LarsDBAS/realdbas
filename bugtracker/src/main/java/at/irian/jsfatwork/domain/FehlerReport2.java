@@ -1,12 +1,12 @@
 package at.irian.jsfatwork.domain;
 
 public class FehlerReport2 {
-	private Integer anzahl = 0;
+	private Long anzahl = (long) 0;
 	private String datum = "";
-	public Integer getAnzahl() {
+	public Long getAnzahl() {
 		return anzahl;
 	}
-	public void setAnzahl(Integer anzahl) {
+	public void setAnzahl(Long anzahl) {
 		this.anzahl = anzahl;
 	}
 	public String getDatum() {

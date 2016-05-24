@@ -16,4 +16,5 @@ public interface FehlerService {
 	public List<Fehler> findByStatusUndNutzer(Status status, Nutzer nutzer);
 	public List<Fehler> findByDateRange(Date begin, Date end);
 	public Fehler findByFehler(Integer feNr);
+	String findNutzer(Integer nutzerNr);
 }

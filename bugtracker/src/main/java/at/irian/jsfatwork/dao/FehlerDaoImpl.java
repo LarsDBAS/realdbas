@@ -129,7 +129,22 @@ public class FehlerDaoImpl implements FehlerDao {
 		return result;
 	}
 
-
+	@Override
+	public String findNutzerNr(Integer nutzerNr) {
+		String result;
+		String nachname;
+		String vorname;
+		Nutzer tempNu;
+		entityManager.getEntityManagerFactory().getCache().evictAll();
+		TypedQuery<Nutzer> q = entityManager.createQuery(""+
+				"From Nutzer As n WHERE n.nuNr = :nuNr" , Nutzer.class);
+		q.setParameter("nuNr", nutzerNr);
+		tempNu = q.getSingleResult();
+		nachname = tempNu.getNachname();
+		vorname = tempNu.getVorname();
+		result = nachname + " " + vorname;
+		return result;
+	}
 
 
 }

@@ -115,9 +115,19 @@ public class FehlerBean {
 		return "/showAndEditError.xhtml";
 	}
 	
+	public String getErstelltVon() {
+		int nutzerNr = 1;
+		if(this.fehler.getErstelltVon()!=null){
+		nutzerNr = this.fehler.getErstelltVon().getNuNr();
+		}
+		return this.fsi.findNutzer(nutzerNr);
+	}
+	
 	public String addFehlerReference(Fehler fehlerToAddTo, String fehlerToAdd){
+		if(fehlerToAdd!=null&&fehlerToAdd!=""){
 		if (!fehlerToAddTo.getVerweistAuf().contains(fsi.findByFehler(Integer.valueOf(fehlerToAdd)))){
 			fehlerToAddTo.getVerweistAuf().add(fsi.findByFehler(Integer.valueOf(fehlerToAdd)));
+			}
 		}
 		return "/showAndEditError.xhtml";
 	}

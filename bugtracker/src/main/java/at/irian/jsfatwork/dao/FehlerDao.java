@@ -18,4 +18,5 @@ public interface FehlerDao {
 	List<Fehler> findByDateRange(Date begin, Date end);
 	void merge(Fehler fehler);
 	Fehler findById(Integer feNr);
+	String findNutzerNr(Integer nutzerNr);
 }
