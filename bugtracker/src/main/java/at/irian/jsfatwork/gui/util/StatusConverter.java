@@ -15,7 +15,7 @@ public class StatusConverter implements javax.faces.convert.Converter {
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
 		Status result = null;
 		TypedQuery<Status> q = EntitySingleton.getEntitymanager().createQuery(""
-				+ "From Status As s Where s.nuNr =:stanr", Status.class);
+				+ "From Status As s Where s.staNr =:stanr", Status.class);
 		q.setParameter("stanr", Integer.valueOf(arg2));
 		result = q.getSingleResult();
 		return result;
