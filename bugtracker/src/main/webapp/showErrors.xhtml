@@ -56,11 +56,11 @@
                 </f:facet>
                 <h:outputText value="#{fehler.erstellt}"/>
             </rich:column>
-            <rich:column width="65px">
+            <rich:column width="80px">
                 <f:facet name="header">
                     <h:outputText value="Status"/>
                 </f:facet>
-                <h:outputText value="#{fehler.status}"/>
+                <h:outputText value="#{fehler.inStatus.getBezeichnung()}"/>
             </rich:column>
             <rich:column width="65px">
                 <f:facet name="header">

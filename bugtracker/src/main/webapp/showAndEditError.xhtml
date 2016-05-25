@@ -49,10 +49,9 @@
 				<f:converter converterId="at.irian.jsfatwork.gui.util.NutzerConverter" />
 	      	</rich:select>
             <h:outputLabel for="status" value="Status:"/>
-			<rich:select id="status" defaultLabel="Status auswählen" value="#{fehlerBean.fehler.status}">
-	            <f:selectItem itemValue="offen" itemLabel="Offen"/>
-	            <f:selectItem itemValue="inbearb" itemLabel="In Bearbeitung"/>
-	            <f:selectItem itemValue="gelöst" itemLabel="Gelöst"/>
+			<rich:select id="status" defaultLabel="Status auswählen" value="#{fehlerBean.fehler.inStatus}">
+				<f:selectItems value="#{statusBean.stati}" var="status" itemValue="#{status}" itemLabel="#{status.bezeichnung}" />
+				<f:converter converterId="at.irian.jsfatwork.gui.util.StatusConverter" />
 	      	</rich:select>
             <h:outputLabel for="prioritaet" value="Priorität:"/>
             <rich:inputNumberSlider id="prioritaet" maxValue="10" minValue="1" value="#{fehlerBean.fehler.prioritaet}" />        

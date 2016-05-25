@@ -28,6 +28,27 @@ public class Status {
 		this.bezeichnung = bezeichnung;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		Boolean res = false;
+		 if ( obj instanceof Status  ){
+			 Status s = (Status)obj;
+			 if(s.getBezeichnung() == this.bezeichnung && s.getStaNr() == this.staNr){
+				 res = true;
+			 }
+			 else {
+				 res = false;
+			 }
+		 } 
+		 return res;
+	}
 	
+
+
+	@Override
+	public String toString() {
+		return String.valueOf(this.staNr);
+	}
+
 
 }
