@@ -39,10 +39,12 @@
 				<rich:select id="erstelltVon" defaultLabel="Nutzer wählen" value="#{reportBean.nutzer}">
 					<f:selectItems value="#{nutzerBean.nutzerOptions}" var="user" itemValue="#{user}" itemLabel="#{user.nachname}, #{user.vorname}" />
 					<f:converter converterId="at.irian.jsfatwork.gui.util.NutzerConverter" />
+		      		 <f:ajax event="selectitem" render="chart1" execute="@this" listener="#{reportBean.ladeDaten()}" />
 		      	</rich:select>
+		      	
 			</h:panelGrid>
 	    
-	    	<hf:chart type="pie" width="50%" align="left">
+	    	<hf:chart id="chart1" type="pie" width="50%" align="left">
 	    		<hf:chartSerie name="Fehler" value="#{reportBean.frList}" var="fr" point="#{fr.anzahl}"  tickLabel="#{fr.status}" dataLabel="&lt;b>{point.name}&lt;/b>: {point.percentage:.1f} % &lt;i>({point.y})&lt;/i>"/>
 			</hf:chart>
         </rich:tab>
@@ -52,14 +54,18 @@
 	            <rich:calendar id="von" value="#{reportBean.von}"
 	                        popup="true"
 	                        datePattern="yyyy-MM-dd"
-	                        showApplyButton="true" cellWidth="12px" cellHeight="11px" style="width:100px"/>
+	                        showApplyButton="true" cellWidth="12px" cellHeight="11px" style="width:100px">
+	            <f:ajax event="change" render="chart2" execute="@this" listener="#{reportBean.ladeDaten()}" />
+	            </rich:calendar>
 	            <h:outputLabel for="bis" value="Bis:"/>
 	            <rich:calendar id="bis" value="#{reportBean.bis}"
 	                        popup="true"
 	                        datePattern="yyyy-MM-dd"
-	                        showApplyButton="true" cellWidth="12px" cellHeight="11px" style="width:100px"/>					
+	                        showApplyButton="true" cellWidth="12px" cellHeight="11px" style="width:100px">
+                <f:ajax event="change" render="chart2" execute="@this" listener="#{reportBean.ladeDaten()}" />
+	            </rich:calendar>				
 			</h:panelGrid>
-				<hf:chart type="column" width="50%" align="left">
+				<hf:chart id="chart2" type="column" width="50%" align="left">
 					<hf:chartSerie name="Fehler" value="#{reportBean.frList2}" var="fr" point="#{fr.anzahl}"  tickLabel="#{fr.datum}" dataLabel="{point.y}" />
 		     		<hf:chartAxis position="w" title="Anzahl" type="linear" format="{value}"
 		         gridLineColor="#000000" style="font-weight: bold;"/>
@@ -71,7 +77,11 @@
 		
 		
         
-        <h:commandButton id="refresh" action="#{reportBean.ladeDaten()}" value="Aktualisieren"/>
+<!--         <h:commandButton id="refresh" value="Aktualisieren"> -->
+<!--                 <a4j:actionListener listener="#{reportBean.ladeDaten()}"/> -->
+<!--                 <f:ajax render="chart1"/> -->
+<!--                 <f:ajax render="chart2"/> -->
+<!--         </h:commandButton> -->
         <h:commandButton id="back" value="Zurück" action="#{fehlerBean.showErrors(fehlerBean.projekt)}" immediate="true"/>
         
     </h:form>

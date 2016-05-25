@@ -119,7 +119,7 @@ public class ReportBean {
 //		
 //	}
 		
-		public String ladeDaten(){
+		public void ladeDaten(){
 			if(this.nutzer != null){
 				List<Status> stati = ssi.showAllStati();
 				this.frList = new ArrayList<FehlerReport>();
@@ -149,6 +149,6 @@ public class ReportBean {
 				frList2.add(fr2);
 			}
 			
-			return "/showReports.xhtml";
+//			return "/showReports.xhtml";
 	}
 }
