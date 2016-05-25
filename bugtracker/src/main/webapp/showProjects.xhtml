@@ -38,7 +38,9 @@
                 <f:facet name="header">
                     <h:outputText value="Bezeichnung"/>
                 </f:facet>
-                <h:outputText value="#{projekt.bezeichnung}"/>
+                <h:commandLink action="#{fehlerBean.showErrors(projekt)}">
+                	<h:outputText value="#{projekt.bezeichnung}"/>
+                </h:commandLink>
             </rich:column>
             
             

@@ -34,13 +34,17 @@
                 </f:facet>
                 <h:outputText value="#{fehler.feNr}"/>
             </rich:column>
-            <rich:column>
+            <rich:column width="300px">
                 <f:facet name="header">
-                    <h:outputText value="Bezeichnung"/>
+                	
+                    	<h:outputText value="Bezeichnung"/>
+                    
                 </f:facet>
-                <h:outputText value="#{fehler.bezeichnung}"/>
+                <h:commandLink action="#{fehlerBean.editFehler(fehler)}">
+                	<h:outputText value="#{fehler.bezeichnung}"/>
+                </h:commandLink>
             </rich:column>
-            <rich:column>
+            <rich:column width="150px">
                 <f:facet name="header">
                     <h:outputText value="Beschreibung"/>
                 </f:facet>
@@ -64,11 +68,11 @@
                 </f:facet>
                 <h:outputText value="#{fehler.prioritaet}"/>
             </rich:column>
-            <rich:column width="95px">
+            <rich:column width="110px">
                 <f:facet name="header">
                     <h:outputText value="Erstellt von:"/>
                 </f:facet>
-                <h:outputText value="#{fehler.getErstelltVon().getVorname()} #{fehler.getErstelltVon().getNachname()}"/>
+                <h:outputText value="#{fehler.getErstelltVon().getNachname()}, #{fehler.getErstelltVon().getVorname()}"/>
             </rich:column>
             <rich:column width="50px">
                 <h:commandLink action="#{fehlerBean.editFehler(fehler)}">
